@@ -1,0 +1,6 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#e9f3f4}#a{width:900px;height:900px}body.d{background:#0b1a2a}</style></head>
+<body><div id="a"></div><script type="module">
+import { mountHero, mountHeart } from '/src/js/scene3d.js';
+const m=new URLSearchParams(location.search).get('m');
+if(m==='heart'){document.body.className='d'; mountHeart(document.getElementById('a'));} else mountHero(document.getElementById('a'));
+</script></body></html>

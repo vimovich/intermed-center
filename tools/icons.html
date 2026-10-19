@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}#a{width:900px;height:900px}</style></head>
+<body><div id="a"></div>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import * as S from '/src/js/shapes.js';
+import { sdfGeometry, heartFn, kidneyFn, neuronFn } from '/src/js/sdf.js';
+const p = new URLSearchParams(location.search);
+const shape = p.get('shape') || 'heart';
+const el = document.getElementById('a');
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(900, 900); r.outputColorSpace = THREE.SRGBColorSpace;
+r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 0.92; r.setClearColor(0, 0);
+el.appendChild(r.domElement);
+const scene = new THREE.Scene();
+const env = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const cam = new THREE.PerspectiveCamera(28, 1, 0.1, 100); cam.position.set(0, 0.3, +(p.get('d') || 9));
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(3, 5, 4);
+const rim = new THREE.DirectionalLight(0x9fe8ff, 2); rim.position.set(-5, 1, -3);
+const fill = new THREE.DirectionalLight(0xc7b8ff, 0.9); fill.position.set(-3, -3, 4);
+scene.add(key, rim, fill, new THREE.AmbientLight(0xffffff, 0.25));
+let obj;
+const P = S.PALETTE;
+switch (shape) {
+  case 'heart': obj = new THREE.Mesh(sdfGeometry(heartFn, { size: 1.75, res: 104, scaleField: 10 }), S.pearl(P.coral, env, { iridescence: 0.8 })); break;
+  case 'kidney': obj = new THREE.Mesh(sdfGeometry(kidneyFn, { size: 1.9, res: 90 }), S.pearl(0xf08a7a, env)); break;
+  case 'neuron': obj = new THREE.Mesh(sdfGeometry(neuronFn, { size: 1.9, res: 96 }), S.pearl(P.lilac, env, { iridescence: 1 })); break;
+  case 'capsule': obj = S.capsule(env); obj.rotation.z = 0.75; obj.scale.setScalar(1.6); break;
+  case 'dna': obj = S.dna(env, { pairs: 12, height: 3.6, twist: 1.4, radius: 0.75 }); obj.rotation.z = 0.35; break;
+  case 'molecule': obj = S.molecule(env, 0.95); break;
+  case 'venus': obj = S.venus(env); break;
+  case 'cross': obj = S.cross(env); obj.rotation.set(0.25, -0.5, 0.1); break;
+  case 'tube': obj = S.tube(env); break;
+  case 'drop': obj = S.drop(env); break;
+}
+if (p.get('rx')) obj.rotation.x += +p.get('rx');
+if (p.get('ry')) obj.rotation.y += +p.get('ry');
+scene.add(obj);
+r.render(scene, cam);
+document.title = 'done';
+</script></body></html>

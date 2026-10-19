@@ -223,7 +223,7 @@ def phero(crumb, title, lead, art, extra='', dark=False):
     cls = ' phero--dark' if dark else ''
     a = art if art.startswith('<') else f'<img class="phero__art" src="/img/3d/{art}.webp" alt="" width="560" height="560" />'
     return f'''<section class="phero{cls}"><div class="container"><div class="phero__card{' dark' if dark else ''}">
- <div class="phero__copy"><nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a>{crumb}</nav><h1 class="display" style="font-size:clamp(32px,4.6vw,64px)" data-reveal>{title}</h1><p class="lead" data-reveal style="--d:.06s">{lead}</p>{extra}</div>
+ <div class="phero__copy"><nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a>{crumb}</nav><h1 class="display" style="font-size:clamp(28px,3.8vw,54px)" data-reveal>{title}</h1><p class="lead" data-reveal style="--d:.06s">{lead}</p>{extra}</div>
  {a}</div></div></section>'''
 
 DIAG = f'''<section class="sec"><div class="diag dark" aria-labelledby="dg-t">

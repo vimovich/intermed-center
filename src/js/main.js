@@ -2,6 +2,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const html = document.documentElement;
 html.classList.remove('no-js');
+html.dataset.v = '1.1';
 
 /* active nav */
 const norm = (p) => p.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/\/+$/, '') || '/';

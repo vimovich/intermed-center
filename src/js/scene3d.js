@@ -61,7 +61,7 @@ export function mountHero(el) {
   const scene = new THREE.Scene();
   lights(scene);
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-  camera.position.set(0, 0, 14);
+  camera.position.set(0, 0, 12);
 
   const helix = dna(env, { pairs: isMobile ? 18 : 24, height: 7.2, twist: 2.6, radius: 1.0 });
   const hg = new THREE.Group(); hg.add(helix); hg.rotation.z = -0.42;
@@ -92,7 +92,7 @@ export function mountHero(el) {
     }
   };
   frame.scene = scene;
-  lifecycle(el, renderer, camera, frame, 14);
+  lifecycle(el, renderer, camera, frame, 12);
 }
 
 /* ================= HEART SCAN (diagnostics) ================= */
